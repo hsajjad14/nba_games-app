@@ -1,0 +1,11 @@
+http://data.nba.net/prod/v1/20190201/scoreboard.json
+
+use date to edit date, or do http://data.nba.net/prod/v1/scoreboard.json for current
+
+OR Even better
+
+https://stats.nba.com/stats/scoreboard/?GameDate=02/03/2019&LeagueID=00&DayOffset=0
+with:
+https://github.com/seemethere/nba_py/wiki/stats.nba.com-Endpoint-Documentation
+and:
+https://www.reddit.com/r/nba/comments/3k91g5/finally_some_documentation_for_the_statsnbacom_api/
