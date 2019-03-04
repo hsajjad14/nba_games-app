@@ -22,8 +22,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class GameListFragment extends Fragment {
 
@@ -104,8 +107,15 @@ public class GameListFragment extends Fragment {
             protected Void doInBackground(Void... voids) {
 
                 try {
-
-                    URL url = new URL("https://stats.nba.com/stats/scoreboard/?GameDate=02/13/2019&LeagueID=00&DayOffset=0");
+                    String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    String day = date.split("-")[2];
+                    String month = date.split("-")[1];
+                    String year = date.split("-")[0];
+                    String comb = "https://stats.nba.com/stats/scoreboard/?GameDate="+month+"/"+day+"/"+year+"&LeagueID=00&DayOffset=0";
+                            //02/13/2019&LeagueID=00&DayOffset=0"
+                    Log.d("EEEEEEEEHHH",month+"/"+day+"/"+year);
+                    //"https://stats.nba.com/stats/scoreboard/?GameDate=02/13/2019&LeagueID=00&DayOffset=0"
+                    URL url = new URL(comb);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     InputStream is = conn.getInputStream();
@@ -125,13 +135,26 @@ public class GameListFragment extends Fragment {
                     int count = 0;
                     for(int i = 0;i<ja3.length();i++){
                         ja4 = new JSONArray(ja3.get(i).toString());
+
+                        Log.d("IIIIII",Integer.toString(count));
+
                         //teams+=ja4.get(4)+": score =  "+ja4.get(21).toString()+"\n";
                         if(count == 1) {
-                            games.get(games.size() - 1).setTeam2(ja4.get(4).toString());
-                            games.get(games.size() - 1).setTeam2_score(Integer.parseInt(ja4.get(21).toString()));
+                            if(ja4.get(21).toString() == "null"){
+                                games.get(games.size() - 1).setTeam2(ja4.get(4).toString());
+                                games.get(games.size() - 1).setTeam2_score(0);
+                            }else{
+                                games.get(games.size() - 1).setTeam2(ja4.get(4).toString());
+                                games.get(games.size() - 1).setTeam2_score(Integer.parseInt(ja4.get(21).toString()));
+                            }
                             count = 0;
                         }else{
-                            games.add(new Games(ja4.get(4).toString(), Integer.parseInt(ja4.get(21).toString())));
+                            if(ja4.get(21).toString() == "null"){
+                                games.add(new Games(ja4.get(4).toString(), 0));
+                            }else{
+                                games.add(new Games(ja4.get(4).toString(), Integer.parseInt(ja4.get(21).toString())));
+
+                            }
                             count = 1;
                         }
                         Log.d("AAAAAHHHHHHH",Integer.toString(games.size()));
