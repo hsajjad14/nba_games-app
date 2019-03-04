@@ -1,0 +1,91 @@
+ private RecyclerView mGamesRecyclerView;
+    private GameAdapter mAdapter;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View view = inflater.inflate(R.layout.fragment_game_list, container, false);
+        mGamesRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
+        mGamesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        updateUI();
+
+        return view;
+    }
+
+    private void updateUI(){
+        MainFragment f = new MainFragment();
+        ArrayList<Games> games = f.getGames();
+
+        mAdapter = new GameAdapter(games);
+        mGamesRecyclerView.setAdapter(mAdapter);
+
+    }
+
+    //viewholder GameHolder
+    private class GameHolder extends RecyclerView.ViewHolder{
+        private TextView mteam1;
+        private TextView mteam2;
+        private TextView mteam1score;
+        private TextView mteam2score;
+
+
+        //bind(crime) method
+        private Games mGame;
+
+        public void bind(Games game){
+            mGame = game;
+            mteam1.setText(mGame.getTeam1());
+            mteam2.setText(mGame.getTeam2());
+            mteam1score.setText(mGame.getTeam1_score());
+            mteam2score.setText(mGame.getTeam2_score());
+
+        }
+
+        public GameHolder(LayoutInflater inflater, ViewGroup parent){
+            super(inflater.inflate(R.layout.list_game_item, parent, false));
+
+            mteam1 = (TextView) itemView.findViewById(R.id.team1);
+            mteam2 = (TextView) itemView.findViewById(R.id.team2);
+            mteam1score = (TextView) itemView.findViewById(R.id.score1);
+            mteam2score = (TextView) itemView.findViewById(R.id.score2);
+
+            // itemView.setOnClickListener(this);
+
+        }
+//        @Override
+//        public void onClick(View view){
+//
+//            Intent intent = CrimeActivity.newIntent(getActivity(), mGame.getId());
+//            startActivity(intent);
+//        }
+
+    }
+
+    //adapter creates the viewholders GameAdapter
+    //and binds viewholders to data frm model layer
+    private class GameAdapter extends RecyclerView.Adapter<GameHolder>{
+
+        private List<Games> mGames;
+
+        public GameAdapter(List<Games> games){
+            mGames = games;
+        }
+
+        @NonNull
+        @Override
+        public GameHolder onCreateViewHolder(@NonNull ViewGroup parent, int ViewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+            return new GameHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull GameHolder GameHolder, int position) {
+            Games game = mGames.get(position);
+            GameHolder.bind(game);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mGames.size();
+        }
+    }
