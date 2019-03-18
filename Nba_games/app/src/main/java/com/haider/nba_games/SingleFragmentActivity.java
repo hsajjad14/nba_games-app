@@ -34,7 +34,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 //        FragmentManager fm = getSupportFragmentManager();
 //        Fragment fragment = fm.findFragmentById(R.id.fragment_nba);
 //        if (fragment == null) {
-//            fragment = new MainFragment();
+//            fragment = new GameFragment();
 //            fm.beginTransaction()
 //                    .add(R.id.fragment_nba, fragment)
 //                    .commit();

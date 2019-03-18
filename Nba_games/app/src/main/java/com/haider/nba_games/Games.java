@@ -1,10 +1,17 @@
 package com.haider.nba_games;
 
+import java.util.UUID;
+
 public class Games {
 
     private String team1;
 
 
+    public UUID getId() {
+        return mId;
+    }
+
+    private UUID mId;
 
     private String team2;
     private int team1_score;
@@ -14,6 +21,7 @@ public class Games {
 
     public Games(String t1, int t1s){
         this.team1 = t1;
+        mId = UUID.randomUUID();
 
         this.team1_score = t1s;
     }

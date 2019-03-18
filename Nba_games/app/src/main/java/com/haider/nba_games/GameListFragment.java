@@ -32,6 +32,7 @@ public class GameListFragment extends Fragment {
 
     private RecyclerView mGameRecycleViewer;
     private GameAdapter mAdapter;
+    ArrayList<Games> games = new ArrayList<>();
 
 
     @Override
@@ -47,7 +48,8 @@ public class GameListFragment extends Fragment {
         return view;
     }
 
-    private class GameHolder extends RecyclerView.ViewHolder {
+    private class GameHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
         private TextView mteam1;
         private TextView mteam2;
         private TextView mteam1score;
@@ -58,7 +60,7 @@ public class GameListFragment extends Fragment {
 
         public GameHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_game_item, parent, false));
-
+            itemView.setOnClickListener(this);
             mteam1 = (TextView) itemView.findViewById(R.id.team1);
             mteam2 = (TextView) itemView.findViewById(R.id.team2);
             mteam1score = (TextView) itemView.findViewById(R.id.score1);
@@ -74,6 +76,12 @@ public class GameListFragment extends Fragment {
 
         }
 
+        @Override
+        public void onClick(View v) {
+            Intent intent = GameActivity.newIntent(getActivity(),mGame.getId());
+            startActivity(intent);
+
+        }
     }
     private class GameAdapter extends RecyclerView.Adapter<GameHolder> {
         private List<Games> mGames;
@@ -96,7 +104,6 @@ public class GameListFragment extends Fragment {
         }
 
     }
-    ArrayList<Games> games = new ArrayList<>();
 
     private void updateUI() {
 
@@ -113,7 +120,7 @@ public class GameListFragment extends Fragment {
                     String year = date.split("-")[0];
                     String comb = "https://stats.nba.com/stats/scoreboard/?GameDate="+month+"/"+day+"/"+year+"&LeagueID=00&DayOffset=0";
                             //02/13/2019&LeagueID=00&DayOffset=0"
-                    Log.d("EEEEEEEEHHH",month+"/"+day+"/"+year);
+                  //  Log.d("EEEEEEEEHHH",month+"/"+day+"/"+year);
                     //"https://stats.nba.com/stats/scoreboard/?GameDate=02/13/2019&LeagueID=00&DayOffset=0"
                     URL url = new URL(comb);
 
@@ -136,7 +143,7 @@ public class GameListFragment extends Fragment {
                     for(int i = 0;i<ja3.length();i++){
                         ja4 = new JSONArray(ja3.get(i).toString());
 
-                        Log.d("IIIIII",Integer.toString(count));
+         //               Log.d("IIIIII",Integer.toString(count));
 
                         //teams+=ja4.get(4)+": score =  "+ja4.get(21).toString()+"\n";
                         if(count == 1) {
@@ -157,7 +164,7 @@ public class GameListFragment extends Fragment {
                             }
                             count = 1;
                         }
-                        Log.d("AAAAAHHHHHHH",Integer.toString(games.size()));
+    //                    Log.d("AAAAAHHHHHHH",Integer.toString(games.size()));
                     }
 
 
@@ -183,7 +190,7 @@ public class GameListFragment extends Fragment {
 
         r.execute();
 
-        Log.d("OOOHHHHHHH",Integer.toString(games.size()));
+   //     Log.d("OOOHHHHHHH",Integer.toString(games.size()));
 
 //        mAdapter = new GameAdapter(games);
 //        mGameRecycleViewer.setAdapter(mAdapter);
