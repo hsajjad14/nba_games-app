@@ -17,5 +17,7 @@ http://nbasense.com/nba-api/Stats/Stats/Game/BoxScoreTraditional#request-code-us
 
 i.e play by play
 https://stats.nba.com/stats/playbyplayv2/?gameId=0021600732&startPeriod=0&endPeriod=14
-get gameid with og api
-and other constants from nbasense site, they are constant.
+get gameid with original api
+and other constants from nbasense site, they are constant, look at array in example.
+
+
